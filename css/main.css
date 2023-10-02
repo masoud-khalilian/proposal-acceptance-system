@@ -1,0 +1,465 @@
+@font-face {
+    font-family: iransansa;
+    src: url("IRANSans.ttf");
+}
+
+/*body*/
+body {
+    font-family: iransansa;
+    background-color: white;
+    direction: rtl;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #606060;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+a:hover {
+    /*color: #ff73b5;*/
+}
+
+.clear {
+    clear: both;
+}
+
+/*main content*/
+.main {
+    width: 1024px;
+    margin: auto;
+    min-height: 700px;
+}
+
+/*top header*/
+.header img {
+    width: 1024px;
+}
+
+/*index side bar*/
+.side-bar {
+    width: 310px;
+    float: right;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: silver;
+}
+
+.info {
+    float: right;
+    width: 250px;
+    padding: 0px 2px;
+}
+
+.info p {
+    padding-top: 2px;
+    color: dimgray;
+    font-size: 12px;
+}
+
+.info span {
+    color: black;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.logout {
+    float: left;
+    text-align: center;
+    margin-left: 5px;
+    padding: 2px;
+}
+
+.logout i.fa.fa-sign-out {
+    font-size: 40px;
+}
+
+.logout i.fa.fa-sign-out:hover {
+    color: #d40505;
+}
+
+
+.side-bar-header {
+    border-bottom: 1px solid #f7f7f7;
+    background-color: darkseagreen;
+}
+
+/*side bar navigation menu start*/
+/**********************************************/
+.nav {
+    padding-bottom: 10px;
+}
+
+.nav ul {
+    list-style: none;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin: 2px 0 0 0;
+
+}
+
+.nav li {
+    padding: 4px 10px;
+
+}
+
+.nav li a {
+    display: block;
+
+}
+
+.nav li a:hover {
+    color: black;
+    font-weight: 700;
+    transition-delay: 0.22s;
+}
+
+.active {
+    border-radius: 5px;
+    background-color: white;
+}
+
+.active a {
+    color: #000;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+/**********************************************/
+/*side bar navigation menu end*/
+
+/*index content*/
+.content {
+    padding-bottom: 20px;
+    width: 692px;
+    float: left;
+    margin-top: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: #f7f7f7;
+    border: 1px solid #E4E4E4;
+}
+
+.content h1 {
+    text-align: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #e4e4e4;
+    margin: 0;
+}
+
+/*index welcome content*/
+a.button.button-primary.button-rounded.button-tiny {
+    font-size: 20px;
+}
+
+.reg_hidden {
+    display: none;
+}
+
+.error_register {
+    display: block !important;
+    color: red;
+    font-size: 20px;
+}
+
+/*login form css start*/
+
+.basic-grey {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+    background: #F7F7F7;
+    padding: 25px 15px 25px 10px;
+    font: 12px Georgia, "Times New Roman", Times, serif;
+    color: #888;
+    text-shadow: 1px 1px 1px #FFF;
+    border: 1px solid #E4E4E4;
+}
+
+.basic-grey h1 {
+    font-size: 25px;
+    padding: 0 40px 10px 0;
+    display: block;
+    border-bottom: 1px solid #E4E4E4;
+    margin: -10px -15px 30px -10px;;
+    color: #888;
+}
+
+.basic-grey h1 > span {
+    display: block;
+    font-size: 11px;
+}
+
+.basic-grey label {
+    display: block;
+    margin: 0;
+}
+
+.radio_label label {
+    display: inline-block !important;
+    margin-left: 19px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.radio_label {
+    margin-bottom: 20px;
+}
+
+.basic-grey label > span {
+    float: right;
+    width: 20%;
+    text-align: right;
+    padding-right: 10px;
+    margin-top: 10px;
+    color: #888;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.basic-grey input[type="text"], .basic-grey input[type="password"], .basic-grey input[type="number"], .basic-grey input[type="email"], .basic-grey textarea, .basic-grey select {
+    border: 1px solid #DADADA;
+    color: #888;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 3px 3px 3px 5px;
+    width: 70%;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+}
+
+.basic-grey textarea {
+    padding: 5px 3px 3px 5px;
+}
+
+.basic-grey select {
+    text-indent: 0.01px;
+    text-overflow: '';
+    width: 72%;
+    height: 35px;
+    line-height: 25px;
+}
+
+.basic-grey textarea {
+    height: 100px;
+}
+
+.basic-grey .button {
+    margin-left: 23px;
+    float: left;
+    font-size: 20px;
+    background: #E27575;
+    border: none;
+    color: #FFF;
+    box-shadow: 1px 1px 5px #B6B6B6;
+    border-radius: 3px;
+    text-shadow: 1px 1px 1px #9E3F3F;
+    cursor: pointer;
+}
+
+.basic-grey .button:hover {
+    background: #CF7A7A
+}
+
+/*login form css end*/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/*student*/
+/*submit proposal page core*/
+.st-submit-proposal {
+    padding-bottom: 10px;
+}
+#subject {
+    border: 1px solid #DADADA;
+    color: #888;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 3px 3px 3px 5px;
+    width: 70%;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+}
+
+.submit-proposal h1, .submit-proposal h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.submit-proposal-content {
+    margin-top: 20px;
+}
+
+.submit-proposal-core {
+    color: black;
+}
+
+.submit-proposal-core > span {
+    color: silver;
+
+}
+.sub-inline{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.choose-professor {
+    height: 220px;
+    overflow-y: scroll;
+}
+
+.choose-professor table {
+    padding-top: 10px;
+}
+
+.choose-professor h3 {
+    border-bottom: 1px solid gray;
+}
+
+.choose-professor table td, .choose-professor table th {
+    padding: 6px;
+    text-align: center;
+}
+
+.choose-professor tr {
+    background-color: #f5f5dc;
+}
+
+/*proposal tracking page*/
+.accept_proposal_respond p {
+    margin-bottom: 20px;
+}
+
+.accept_proposal_respond span {
+    background-color: #2f7696;
+    padding: 0 5px;
+    border-radius: 10px;
+    color: white;
+
+}
+
+/***************end student********************/
+/**********************************************/
+/**********************************************/
+
+/*professor*/
+/*view proposal*/
+.professor_view_proposal {
+    border: 1px solid #e4e4e4;
+    padding: 1px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    display: inline-block;
+    width: 325px;
+    float: right;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+.professor_view_proposal_box1 {
+    background-color: white;
+}
+
+.professor_view_proposal_box2 {
+    background-color: #c0c0c0;
+}
+
+.professor_view_proposal_box2 > .button {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.view-proposal-detail {
+
+    border: 1px solid #e4e4e4;
+    padding: 4px;
+    margin-bottom: 10px;
+
+}
+
+.view-proposal-detail > h1, .view-proposal-detail > h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.view-proposal-detail > h1 {
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.view-proposal-detail-meta {
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.view-proposal-detail-meta > table {
+    margin: 0 auto;
+}
+
+.view-proposal-detail-meta table td {
+    padding: 10px;
+}
+
+.view-proposal-detail-meta-content {
+    /*border: 1px solid black;*/
+    padding: 2px;
+
+}
+
+.view-detail .button {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.view-detail {
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+.proposal-view-corigendum {
+    padding: 0 2px;
+}
+
+.proposal-view-corigendum h3 {
+    margin: 0;
+    font-size: 14px;
+    padding: 2px;
+}
+
+/***************end professor********************/
+/**********************************************/
+/**********************************************/
+
+/*start footer*/
+.footer {
+    margin-top: 10px;
+    height: 110px;
+    background-color: #6cb6dd;
+    padding: 10px;
+}
+
+.footer p {
+    font-size: 12px;
+
+}
