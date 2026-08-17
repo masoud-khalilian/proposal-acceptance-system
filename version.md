@@ -38,3 +38,9 @@ the same version number will also be surfaced in-app.
   protection on every form, role-guard 403s for cross-role access and
   302-to-login for anonymous access, and fa/en locale switching — all
   confirmed working against the real containers.
+- `0.6.0` — Added `setup.sh` (one-shot dev bootstrap: generates `.env`,
+  builds/starts the stack, waits for health) and a "Dev mode setup" section
+  in `README.md` explaining live code reload via the bind mount, when a
+  rebuild is actually needed, and the day-to-day Compose commands. Added
+  `.gitattributes` forcing LF line endings for `*.sh` so a future checkout
+  under this repo's `core.autocrlf` setting can't corrupt the shebang line.

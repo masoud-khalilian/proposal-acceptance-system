@@ -9,7 +9,38 @@ The original 2017-era raw-PHP version of this app is kept under [`legacy/`](lega
 for reference during the rebuild; see [`plan.md`](plan.md) for the full
 rationale and rollout plan, and [`version.md`](version.md) for a changelog.
 
-## Running locally (Docker)
+## Dev mode setup
+
+```bash
+./setup.sh
+```
+
+This is the one-shot path: it creates `.env` from `.env.example` (generating a
+random `DB_PASSWORD` if `.env` doesn't exist yet), builds and starts the
+Docker Compose stack, and waits for the app to answer before printing the
+URLs. Safe to re-run — it won't touch an existing `.env`.
+
+"Dev mode" here means `APP_ENV=local` / `APP_DEBUG=true` in `.env`, which:
+- disables the Twig template cache, so template edits show up on refresh
+  with no rebuild;
+- makes Slim's error middleware render full stack traces instead of a
+  generic error page.
+
+The whole repo is bind-mounted into the `app` container (`docker-compose.yml`),
+so **PHP/template/translation changes are picked up immediately** — just
+refresh the browser. You only need to rebuild (`docker compose up --build`)
+when `composer.json`/`Dockerfile` change, i.e. when dependencies change.
+
+Useful commands once it's running:
+
+```bash
+docker compose logs -f app     # tail app logs
+docker compose exec app sh     # shell into the app container
+docker compose down            # stop
+docker compose down -v         # stop and wipe the database volume
+```
+
+## Running locally (Docker, manual steps)
 
 ```bash
 cp .env.example .env    # edit DB_PASSWORD at minimum
