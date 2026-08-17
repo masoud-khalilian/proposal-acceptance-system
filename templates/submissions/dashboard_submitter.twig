@@ -1,0 +1,64 @@
+{% extends 'layout/base.twig' %}
+{% block content %}
+    <h1>{{ t('submission.my_submissions') }}</h1>
+
+    {% if submissions is empty %}
+        <p>{{ t('submission.no_submissions') }}</p>
+    {% else %}
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>{{ t('submission.title') }}</th>
+                <th>{{ t('submission.workflow_type') }}</th>
+                <th>{{ t('submission.created_at') }}</th>
+                <th>{{ t('review.decision') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.title }}</td>
+                    <td>{{ locale == 'fa' ? submission.workflow_label_fa : submission.workflow_label_en }}</td>
+                    <td>{{ submission.created_at }}</td>
+                    <td>{{ submission.status == 'approved' ? t('submission.status_approved') : t('submission.status_pending') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h2>{{ t('submission.new_submission') }}</h2>
+    <form action="/submitter/submissions" method="post" class="basic-grey">
+        <input type="hidden" name="csrf_name" value="{{ csrf_name }}">
+        <input type="hidden" name="csrf_value" value="{{ csrf_value }}">
+
+        <label>
+            {{ t('submission.workflow_type') }}
+            <select name="workflow_type" required>
+                {% for wt in workflow_types %}
+                    <option value="{{ wt.key }}">{{ locale == 'fa' ? wt.label_fa : wt.label_en }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>
+            <input type="text" name="title" placeholder="{{ t('submission.title') }}" required>
+        </label>
+
+        <label>
+            <textarea name="content" class="mytextarea" required></textarea>
+        </label>
+
+        <fieldset>
+            <legend>{{ t('submission.reviewers') }}</legend>
+            {% for reviewer in reviewers %}
+                <label class="checkbox-row">
+                    <input type="checkbox" name="reviewer_ids[]" value="{{ reviewer.id }}">
+                    {{ reviewer.first_name }} {{ reviewer.last_name }} ({{ reviewer.capacity }})
+                </label>
+            {% endfor %}
+        </fieldset>
+
+        <label><input type="submit" class="button" value="{{ t('submission.submit') }}"></label>
+    </form>
+{% endblock %}

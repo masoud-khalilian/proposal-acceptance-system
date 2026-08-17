@@ -1,0 +1,46 @@
+{% extends 'layout/base.twig' %}
+{% block content %}
+    <div class="view-proposal-detail">
+        <h1>{{ submission.title }}</h1>
+        <p>{{ t('submission.status_' ~ submission.status) }}</p>
+        <div class="view-proposal-detail-meta-content content-block">{{ submission.content }}</div>
+    </div>
+
+    <h2>{{ t('review.decision') }}</h2>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>{{ t('review.submitted_by') }}</th>
+            <th>{{ t('review.decision') }}</th>
+            <th>{{ t('review.comment') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for r in reviewers %}
+            <tr>
+                <td>{{ r.first_name }} {{ r.last_name }}</td>
+                <td>{{ t('review.decision_' ~ r.decision) }}</td>
+                <td>{{ r.comment }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if my_assignment.decision == 'pending' %}
+        <form action="/reviewer/submissions/{{ submission.id }}/decision" method="post" class="basic-grey">
+            <input type="hidden" name="csrf_name" value="{{ csrf_name }}">
+        <input type="hidden" name="csrf_value" value="{{ csrf_value }}">
+            <label>
+                <textarea name="comment" class="mytextarea" placeholder="{{ t('review.comment') }}"></textarea>
+            </label>
+            <label>
+                <button type="submit" name="action" value="approve" class="button">{{ t('review.approve') }}</button>
+            </label>
+            <label>
+                <button type="submit" name="action" value="request_changes" class="button">{{ t('review.request_changes') }}</button>
+            </label>
+        </form>
+    {% endif %}
+
+    <p><a href="/reviewer">{{ t('review.back') }}</a></p>
+{% endblock %}

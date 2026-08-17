@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'IRANSans';
+    src: url('/assets/fonts/IRANSans.ttf') format('truetype');
+}
+
+:root {
+    --color-bg: #f5f6fa;
+    --color-surface: #ffffff;
+    --color-border: #dcdfe6;
+    --color-text: #2b2f38;
+    --color-primary: #2f6feb;
+    --color-primary-contrast: #ffffff;
+    --color-error: #c0392b;
+    --color-success: #1e8e3e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'IRANSans', system-ui, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+html[dir="rtl"] body { font-family: 'IRANSans', Tahoma, sans-serif; }
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--color-text); font-weight: bold; }
+.brand img { height: 32px; border-radius: 4px; }
+
+nav { display: flex; align-items: center; gap: 1rem; }
+nav a, .link-button { color: var(--color-primary); text-decoration: none; background: none; border: none; cursor: pointer; font: inherit; }
+.inline-form { display: inline; }
+
+.content { max-width: 960px; margin: 1.5rem auto; padding: 0 1rem; }
+
+.flash { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+.flash-error { background: #fdecea; color: var(--color-error); }
+.flash-success { background: #e6f4ea; color: var(--color-success); }
+
+.basic-grey {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 480px;
+}
+
+.basic-grey h1 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+.basic-grey h1 span { display: block; font-size: 0.85rem; font-weight: normal; color: #666; }
+
+.basic-grey input[type="text"],
+.basic-grey input[type="password"],
+.basic-grey input[type="number"],
+.basic-grey select,
+.basic-grey textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font: inherit;
+}
+
+.basic-grey textarea { min-height: 140px; resize: vertical; }
+
+.radio_label { display: flex; gap: 1rem; flex-wrap: wrap; }
+.checkbox-row { display: flex; align-items: center; gap: 0.4rem; }
+
+.button, button.button {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font: inherit;
+}
+
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; background: var(--color-surface); }
+.data-table th, .data-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-border); text-align: start; }
+.data-table th { background: #fafbfc; }
+
+.view-proposal-detail { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.content-block { white-space: pre-wrap; }
+
+.app-footer { text-align: center; padding: 1rem; color: #999; font-size: 0.8rem; }

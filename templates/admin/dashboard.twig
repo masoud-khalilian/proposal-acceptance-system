@@ -1,0 +1,50 @@
+{% extends 'layout/base.twig' %}
+{% block content %}
+    <h1>{{ t('admin.title') }}</h1>
+
+    <p>{{ t('admin.system_version') }}: {{ app_version }}</p>
+
+    <h2>{{ t('admin.actors') }}</h2>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>{{ t('auth.username') }}</th>
+            <th>{{ t('auth.first_name') }}</th>
+            <th>{{ t('auth.last_name') }}</th>
+            <th>{{ t('admin.role') }}</th>
+            <th>{{ t('admin.capacity') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for actor in actors %}
+            <tr>
+                <td>{{ actor.username }}</td>
+                <td>{{ actor.first_name }}</td>
+                <td>{{ actor.last_name }}</td>
+                <td>{{ locale == 'fa' ? actor.role_label_fa : actor.role_label_en }}</td>
+                <td>{{ actor.capacity }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>{{ t('admin.submissions') }}</h2>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>{{ t('submission.title') }}</th>
+            <th>{{ t('submission.workflow_type') }}</th>
+            <th>{{ t('review.decision') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.title }}</td>
+                <td>{{ locale == 'fa' ? submission.workflow_label_fa : submission.workflow_label_en }}</td>
+                <td>{{ submission.status == 'approved' ? t('submission.status_approved') : t('submission.status_pending') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

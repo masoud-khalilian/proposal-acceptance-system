@@ -29,3 +29,12 @@ the same version number will also be surfaced in-app.
   real admin overview (replacing the `echo 'hi im admin'` stub), and
   `bin/create-actor.php` for creating reviewer/admin accounts (matching the
   legacy app's design where only submitters self-register).
+- `0.5.0` — Added Twig templates, fa/en translations, and app styling for
+  every screen (Twig's auto-escaping fixes the legacy XSS issues by
+  construction), the `VERSION` file surfaced in the footer and admin
+  dashboard, and the project `README.md`. Verified the whole stack end to
+  end in a live Docker Compose run: register → login (submitter/reviewer/
+  admin) → create submission → approve → reviewer-capacity decrement, CSRF
+  protection on every form, role-guard 403s for cross-role access and
+  302-to-login for anonymous access, and fa/en locale switching — all
+  confirmed working against the real containers.

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ direction }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('app.name') }}</title>
+    <link rel="icon" href="/assets/img/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="/">
+        <img src="/assets/img/logo.jpg" alt="">
+        <span>{{ t('app.name') }}</span>
+    </a>
+    <nav>
+        {% if current_actor.id %}
+            <a href="/dashboard">{{ t('nav.dashboard') }}</a>
+            <form action="/logout" method="post" class="inline-form">
+                <input type="hidden" name="csrf_name" value="{{ csrf_name }}">
+        <input type="hidden" name="csrf_value" value="{{ csrf_value }}">
+                <button type="submit" class="link-button">{{ t('nav.logout') }}</button>
+            </form>
+        {% else %}
+            <a href="/login">{{ t('nav.login') }}</a>
+            <a href="/register">{{ t('nav.register') }}</a>
+        {% endif %}
+        <span class="lang-switch">
+            <a href="?lang=fa">فا</a> / <a href="?lang=en">EN</a>
+        </span>
+    </nav>
+</header>
+
+<main class="content">
+    {% if flash %}
+        <div class="flash flash-{{ flash.type }}">{{ flash.message }}</div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+<footer class="app-footer">v{{ app_version }}</footer>
+</body>
+</html>

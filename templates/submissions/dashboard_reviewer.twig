@@ -1,0 +1,29 @@
+{% extends 'layout/base.twig' %}
+{% block content %}
+    <h1>{{ t('review.assigned_to_me') }}</h1>
+
+    {% if assignments is empty %}
+        <p>{{ t('review.no_assignments') }}</p>
+    {% else %}
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>{{ t('submission.title') }}</th>
+                <th>{{ t('review.submitted_by') }}</th>
+                <th>{{ t('review.decision') }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for a in assignments %}
+                <tr>
+                    <td>{{ a.title }}</td>
+                    <td>{{ a.first_name }} {{ a.last_name }}</td>
+                    <td>{{ t('review.decision_' ~ a.decision) }}</td>
+                    <td><a href="/reviewer/submissions/{{ a.submission_id }}">{{ t('review.view') }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
