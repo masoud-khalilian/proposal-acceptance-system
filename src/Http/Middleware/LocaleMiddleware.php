@@ -17,15 +17,26 @@ final class LocaleMiddleware implements MiddlewareInterface
     {
     }
 
+    private const LOCALE_COOKIE = 'locale';
+    private const LOCALE_COOKIE_TTL = 60 * 60 * 24 * 365;
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requested = $request->getQueryParams()['lang'] ?? null;
 
         if ($requested !== null) {
-            $_SESSION['locale'] = $requested;
+            // A dedicated long-lived cookie, not the session, so the choice
+            // survives closing the browser and doesn't depend on being logged in.
+            setcookie(self::LOCALE_COOKIE, $requested, [
+                'expires' => time() + self::LOCALE_COOKIE_TTL,
+                'path' => '/',
+                'httponly' => true,
+                'samesite' => 'Lax',
+            ]);
+            $_COOKIE[self::LOCALE_COOKIE] = $requested;
         }
 
-        $this->translator->setLocale($_SESSION['locale'] ?? null);
+        $this->translator->setLocale($_COOKIE[self::LOCALE_COOKIE] ?? null);
 
         $this->view->getEnvironment()->addGlobal('locale', $this->translator->locale());
         $this->view->getEnvironment()->addGlobal('direction', $this->translator->direction());

@@ -49,3 +49,6 @@ the same version number will also be surfaced in-app.
   local login/testing across all three roles, and documented them in a new
   "Demo accounts" README section. Verified all three actually log in against
   the live dev stack.
+- `0.7.0` — The fa/en locale choice is now remembered via a dedicated
+  long-lived cookie instead of only the PHP session, so it survives closing
+  the browser and doesn't depend on being logged in.
