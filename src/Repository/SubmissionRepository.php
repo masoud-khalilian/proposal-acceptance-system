@@ -53,6 +53,14 @@ final class SubmissionRepository
         return $stmt->fetchAll();
     }
 
+    public function attachFile(int $submissionId, string $originalFilename, int $sizeBytes): void
+    {
+        $stmt = $this->db->prepare(
+            'UPDATE submissions SET attachment_filename = :filename, attachment_size = :size WHERE id = :id'
+        );
+        $stmt->execute(['filename' => $originalFilename, 'size' => $sizeBytes, 'id' => $submissionId]);
+    }
+
     public function markApproved(int $submissionId, int $approvedBy): void
     {
         $stmt = $this->db->prepare(

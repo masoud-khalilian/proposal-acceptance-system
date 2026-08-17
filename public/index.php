@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Config\Database;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReviewerController;
 use App\Http\Controllers\SubmitterController;
@@ -42,6 +43,11 @@ $view->getEnvironment()->addFunction(new \Twig\TwigFunction(
 ));
 $view->getEnvironment()->addGlobal('app_version', trim((string) file_get_contents(__DIR__ . '/../VERSION')));
 
+$uploadsDir = __DIR__ . '/../var/uploads';
+if (!is_dir($uploadsDir)) {
+    mkdir($uploadsDir, 0775, true);
+}
+
 $actorRepository = new ActorRepository($db);
 $roleRepository = new RoleRepository($db);
 $workflowTypeRepository = new WorkflowTypeRepository($db);
@@ -65,7 +71,8 @@ $submitterController = new SubmitterController(
     $submissionRepository,
     $actorRepository,
     $workflowTypeRepository,
-    $workflowService
+    $workflowService,
+    $uploadsDir
 );
 $reviewerController = new ReviewerController(
     $view,
@@ -75,6 +82,7 @@ $reviewerController = new ReviewerController(
     $workflowService
 );
 $adminController = new AdminController($view, $translator, $actorRepository, $submissionRepository);
+$attachmentController = new AttachmentController($view, $translator, $submissionRepository, $workflowService, $uploadsDir);
 
 $app->get('/', [$authController, 'dashboard']);
 $app->get('/login', [$authController, 'showLogin']);
@@ -98,6 +106,13 @@ $app->group('', function ($group) use ($reviewerController) {
 $app->group('', function ($group) use ($adminController) {
     $group->get('/admin', [$adminController, 'dashboard']);
 })->add(new RoleMiddleware(['admin']))->add(new AuthMiddleware());
+
+// Reachable by the submitter who owns it, any assigned reviewer, or admin -
+// spans multiple roles, so the ownership check happens inside the
+// controller instead of via RoleMiddleware.
+$app->group('', function ($group) use ($attachmentController) {
+    $group->get('/submissions/{id}/attachment', [$attachmentController, 'download']);
+})->add(new AuthMiddleware());
 
 $app->get('/health', function ($request, $response) {
     $response->getBody()->write('ok');

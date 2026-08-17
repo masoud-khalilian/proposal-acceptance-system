@@ -59,3 +59,15 @@ the same version number will also be surfaced in-app.
   field labels instead of placeholder-only inputs, `autocomplete` attributes,
   a responsive/wrapping topbar, hover/focus states, and a scrollable wrapper
   around wide tables for small screens.
+- `0.8.0` — Submitters can attach an optional PDF to a submission; assigned
+  reviewers and admin can view/download it via an ownership-checked route
+  (`GET /submissions/{id}/attachment` - owner, assigned reviewer, or admin
+  only, verified with a live 403 test against an unrelated account). The
+  upload is validated by its own magic bytes (`%PDF-`), not the
+  client-supplied filename/MIME type, and capped at 10 MB. Also generalized
+  the default-locale role labels (`roles.label_fa` was literally
+  "دانشجو"/"استاد" - Student/Professor - even though the engine itself is
+  role-neutral) to "ارسال‌کننده"/"داور" (Submitter/Reviewer), and seeded a
+  second workflow type (`general_request`) so the UI itself demonstrates
+  this is a generic submission -> reviewer approval engine, not something
+  hardcoded to thesis proposals.

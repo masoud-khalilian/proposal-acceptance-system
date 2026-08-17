@@ -5,6 +5,7 @@
     <p>{{ t('admin.system_version') }}: {{ app_version }}</p>
 
     <h2>{{ t('admin.actors') }}</h2>
+    <div class="table-scroll">
     <table class="data-table">
         <thead>
         <tr>
@@ -27,14 +28,17 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
     <h2>{{ t('admin.submissions') }}</h2>
+    <div class="table-scroll">
     <table class="data-table">
         <thead>
         <tr>
             <th>{{ t('submission.title') }}</th>
             <th>{{ t('submission.workflow_type') }}</th>
             <th>{{ t('review.decision') }}</th>
+            <th>{{ t('submission.attachment') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -43,8 +47,14 @@
                 <td>{{ submission.title }}</td>
                 <td>{{ locale == 'fa' ? submission.workflow_label_fa : submission.workflow_label_en }}</td>
                 <td>{{ submission.status == 'approved' ? t('submission.status_approved') : t('submission.status_pending') }}</td>
+                <td>
+                    {% if submission.attachment_filename %}
+                        <a class="attachment-link" href="/submissions/{{ submission.id }}/attachment">{{ t('submission.download_attachment') }}</a>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endblock %}

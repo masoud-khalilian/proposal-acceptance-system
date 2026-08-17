@@ -1,12 +1,16 @@
 {% extends 'layout/base.twig' %}
 {% block content %}
-    <div class="view-proposal-detail">
+    <div class="submission-detail">
         <h1>{{ submission.title }}</h1>
         <p>{{ t('submission.status_' ~ submission.status) }}</p>
-        <div class="view-proposal-detail-meta-content content-block">{{ submission.content }}</div>
+        {% if submission.attachment_filename %}
+            <p><a class="attachment-link" href="/submissions/{{ submission.id }}/attachment" target="_blank" rel="noopener">{{ t('submission.download_attachment') }}</a></p>
+        {% endif %}
+        <div class="content-block">{{ submission.content }}</div>
     </div>
 
     <h2>{{ t('review.decision') }}</h2>
+    <div class="table-scroll">
     <table class="data-table">
         <thead>
         <tr>
@@ -25,19 +29,21 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
     {% if my_assignment.decision == 'pending' %}
         <form action="/reviewer/submissions/{{ submission.id }}/decision" method="post" class="basic-grey">
             <input type="hidden" name="csrf_name" value="{{ csrf_name }}">
-        <input type="hidden" name="csrf_value" value="{{ csrf_value }}">
-            <label>
-                <textarea name="comment" class="mytextarea" placeholder="{{ t('review.comment') }}"></textarea>
-            </label>
+            <input type="hidden" name="csrf_value" value="{{ csrf_value }}">
+            <div class="field">
+                <label class="field-label" for="comment">{{ t('review.comment') }}</label>
+                <textarea id="comment" name="comment" class="mytextarea"></textarea>
+            </div>
             <label>
                 <button type="submit" name="action" value="approve" class="button">{{ t('review.approve') }}</button>
             </label>
             <label>
-                <button type="submit" name="action" value="request_changes" class="button">{{ t('review.request_changes') }}</button>
+                <button type="submit" name="action" value="request_changes" class="button button-secondary">{{ t('review.request_changes') }}</button>
             </label>
         </form>
     {% endif %}

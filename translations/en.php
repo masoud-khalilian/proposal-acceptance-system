@@ -48,6 +48,11 @@ return [
     'submission.fill_all_fields' => 'Please fill in all the fields.',
     'submission.at_least_one_reviewer' => 'At least one reviewer must be selected.',
     'submission.created' => 'Your submission was created.',
+    'submission.attachment' => 'Attachment (PDF)',
+    'submission.attachment_hint' => 'Optional, max 10 MB, PDF only.',
+    'submission.attachment_too_large' => 'The attachment is too large.',
+    'submission.attachment_invalid' => 'The attachment must be a valid PDF.',
+    'submission.download_attachment' => 'Download attachment',
 
     'review.assigned_to_me' => 'Assigned to me',
     'review.submitted_by' => 'Submitted by',
