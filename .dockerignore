@@ -1,0 +1,12 @@
+.git
+.gitignore
+.idea
+legacy/
+plan.md
+version.md
+README.md
+doc.pdf
+.env
+vendor/
+var/
+tests/

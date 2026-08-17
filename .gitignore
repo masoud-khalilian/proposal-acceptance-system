@@ -7,3 +7,10 @@
 /dataSources/
 /dataSources.local.xml
 /.idea
+
+# App
+/.env
+/vendor/
+/var/
+composer.lock
+.phpunit.result.cache

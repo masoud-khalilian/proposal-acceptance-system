@@ -15,3 +15,9 @@ the same version number will also be surfaced in-app.
   and PostgreSQL. Revised the rollout plan accordingly. Also reflects the
   repo hygiene done in the previous commit (legacy app moved to `legacy/`,
   junk tutorial webpage removed).
+- `0.3.0` — New application skeleton: Composer (Slim 4, Twig, slim/csrf,
+  phpdotenv), Docker Compose (app + nginx + PostgreSQL + adminer), Postgres
+  migrations for the generic schema (`roles`, `actors`, `workflow_types`,
+  `submissions`, `submission_reviewers`), seeded with the default
+  submitter/reviewer/admin + thesis-proposal configuration. `.env`/`vendor/`/
+  `var/` added to `.gitignore`.
