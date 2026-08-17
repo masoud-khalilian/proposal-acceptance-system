@@ -112,47 +112,73 @@ landing all at once.
   TinyMCE/Font Awesome to Composer/npm or CDN, add `README.md`, tighten
   `.gitignore` (`vendor/`, `node_modules/`, `.env`).
 
-## 4. Open decisions — needs your call before I build the detailed steps
+## 4. Decisions (locked in 2026-08-17)
 
-These are genuinely yours to pick; I've marked a recommendation but the plan
-branches meaningfully depending on the answer.
+1. **Multi-language** → i18n only: Persian + English UI via translation files,
+   single codebase.
+2. **Modernization depth** → Lightweight: Slim (PSR-7/15) router + our own
+   structure, not a full framework.
+3. **Multi-purpose** → Generic workflow engine: domain is genericized to
+   "submission → reviewer approval" (config-driven roles/workflow types), not
+   hardcoded to students/professors. The university proposal flow becomes one
+   configuration of the generic engine, not the only thing it can model.
+4. **Database** → PostgreSQL (schema rebuilt from scratch as migrations, so no
+   MySQL legacy-format constraint).
+5. **`doc.pdf`** → not yet decided; left in place at repo root for now.
 
-1. **"Multi-language" — which meaning did you want?**
-   - (a) *i18n only* (Recommended baseline): Persian + English UI via translation
-     files, same single PHP codebase.
-   - (b) *Polyglot backend*: keep PHP as the core app but add a genuinely separate
-     service in another language (e.g. a small Go/Node notification or export
-     service) so the system literally spans multiple languages.
-   - (c) Both.
-2. **PHP modernization depth**
-   - Lightweight: plain PSR-7/15 router (e.g. Slim) + your own structure — closest
-     to what exists now, smaller diff.
-   - Full framework: Laravel — much more scaffolding/convention, bigger rewrite,
-     but a lot of the security/CSRF/ORM concerns come free.
-3. **"Multi-purpose" — how far to generalize?**
-   - Add a JSON REST API alongside the web UI (so other clients — e.g. a mobile
-     app — could use it), keeping the domain (students/professors/proposals)
-     as-is.
-   - Go further and genericize the domain into a reusable "submission → reviewer
-     approval" workflow engine (rename entities generically, config-driven
-     roles) so it's not university-specific at all.
-4. **Database engine** — stay on MySQL/MariaDB, or move to PostgreSQL while we're
-   rebuilding the schema anyway?
-5. **`doc.pdf`** — keep, move to `/docs`, or drop from the repo?
+Because the target domain model (generic submissions/reviewers/workflow types)
+doesn't map cleanly onto patching the old hardcoded student/professor/admin
+code in place, this is a fresh build rather than an in-place patch. The
+original app's code is preserved under `legacy/` for reference/parity-checking
+during the rebuild, not deleted.
 
-## 5. Rollout phases (once §4 is answered)
+## 5. Target architecture
 
-1. **Repo hygiene** — delete tutorial junk, add `README.md`/`.gitignore` fixes,
-   decide on `doc.pdf`.
-2. **Dockerize as-is** — get the current (still-buggy) app running under Docker
-   Compose so there's a working baseline to diff against.
-3. **Security fixes in place** — prepared statements, hashed passwords, CSRF,
-   escaping, auth/ownership checks — without changing overall structure yet.
-4. **Structural modernization** — Composer, PSR-4, routing, env-based config,
-   schema migrations.
-5. **i18n / API / multi-purpose work** — per your answers in §4.
-6. **Tests + CI** (GitHub Actions running lint + tests on push).
+- **Framework**: Slim 4 (PSR-7/15), Twig for templates (auto-escaping — kills
+  the XSS problem by construction), `slim/csrf` for CSRF protection,
+  `vlucas/phpdotenv` for env config. Composer-managed, PSR-4 autoload under
+  `src/`.
+- **Domain** (generic, config-driven):
+  - `roles` — e.g. `submitter`, `reviewer`, `admin` (labels in fa/en).
+  - `actors` — a user with a role; a JSONB `profile` column holds role-specific
+    extra fields (e.g. `field_level` for a submitter, `present_day` for a
+    reviewer) instead of hardcoded columns per role.
+  - `workflow_types` — e.g. `thesis_proposal`; what kind of submission this is.
+  - `submissions` — title/content/status, belongs to a submitter + workflow type.
+  - `submission_reviewers` — assignment of a submission to one or more
+    reviewers, each with their own `decision` (pending / changes_requested /
+    approved / withdrawn) and comment. This directly replaces
+    `proposal_pending` + the ad-hoc corrigendum column.
+- **Auth**: `password_hash`/`password_verify`, session regeneration on login,
+  role + ownership middleware guarding every state-changing route.
+- **Data access**: PDO with prepared statements everywhere (no string
+  interpolation into SQL, ever).
+- **i18n**: `fa` (default, RTL) and `en`, simple array-based translation files
+  keyed by string id.
+- **Docker**: `docker-compose.yml` with `app` (PHP-FPM + nginx) + `postgres` +
+  `adminer` for local dev; `.env.example` committed, real `.env` gitignored.
+
+## 6. Rollout phases
+
+1. **Repo hygiene** — remove the junk tutorial folder under `css/`; move the
+   entire legacy app into `legacy/` (kept for reference, not deleted).
+2. **New app skeleton** — Composer, Slim bootstrap, Docker Compose (app +
+   Postgres + adminer), Postgres migrations for the generic schema above.
+3. **Auth + roles** — register/login/logout, hashed passwords, CSRF, session
+   regen, role middleware.
+4. **Core workflow** — submitter creates a submission and assigns reviewers;
+   reviewer sees assigned submissions, approves or requests changes with a
+   comment; submitter tracks status. This is full parity with the old
+   student/professor proposal flow, expressed generically.
+5. **Admin** — minimal real admin views (actor/submission overview) replacing
+   the old `echo 'hi im admin'` stub.
+6. **i18n** — fa/en translation files wired through every screen built above.
+7. **Tests + CI** — at minimum smoke tests for auth and the core workflow, plus
+   a GitHub Actions job running them.
+
+Each phase lands as its own reviewable slice rather than one giant commit;
+`version.md` gets an entry per meaningful change (see project convention).
 
 ---
-*Branch `2026dev` will be created off `main` for this work. No code changes have
-been made yet — this file is for review first.*
+*Built on branch `2026dev`. Nothing is committed without explicit approval —
+see repo conventions.*
