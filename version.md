@@ -52,3 +52,10 @@ the same version number will also be surfaced in-app.
 - `0.7.0` — The fa/en locale choice is now remembered via a dedicated
   long-lived cookie instead of only the PHP session, so it survives closing
   the browser and doesn't depend on being logged in.
+- `0.7.1` — Removed the Islamic Azad University branded header image and
+  favicon inherited from the legacy app's assets (the app is meant to be
+  generic, not tied to one institution) - replaced with a plain generic
+  checkmark mark/favicon. Also polished the auth forms and nav: visible
+  field labels instead of placeholder-only inputs, `autocomplete` attributes,
+  a responsive/wrapping topbar, hover/focus states, and a scrollable wrapper
+  around wide tables for small screens.

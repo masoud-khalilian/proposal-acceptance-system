@@ -5,6 +5,7 @@
     {% if assignments is empty %}
         <p>{{ t('review.no_assignments') }}</p>
     {% else %}
+        <div class="table-scroll">
         <table class="data-table">
             <thead>
             <tr>
@@ -25,5 +26,6 @@
             {% endfor %}
             </tbody>
         </table>
+        </div>
     {% endif %}
 {% endblock %}

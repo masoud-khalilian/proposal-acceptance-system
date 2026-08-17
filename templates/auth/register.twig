@@ -5,12 +5,30 @@
         <input type="hidden" name="csrf_name" value="{{ csrf_name }}">
         <input type="hidden" name="csrf_value" value="{{ csrf_value }}">
 
-        <label><input type="text" name="username" placeholder="{{ t('auth.username') }}" required></label>
-        <label><input type="password" name="password" placeholder="{{ t('auth.password') }}" required></label>
-        <label><input type="password" name="password_confirmation" placeholder="{{ t('auth.password_confirmation') }}" required></label>
-        <label><input type="text" name="first_name" placeholder="{{ t('auth.first_name') }}" required></label>
-        <label><input type="text" name="last_name" placeholder="{{ t('auth.last_name') }}" required></label>
-        <label><input type="text" name="field_level" placeholder="{{ t('auth.field_level') }}"></label>
+        <div class="field">
+            <label class="field-label" for="username">{{ t('auth.username') }}</label>
+            <input id="username" type="text" name="username" autocomplete="username" required>
+        </div>
+        <div class="field">
+            <label class="field-label" for="password">{{ t('auth.password') }}</label>
+            <input id="password" type="password" name="password" autocomplete="new-password" required>
+        </div>
+        <div class="field">
+            <label class="field-label" for="password_confirmation">{{ t('auth.password_confirmation') }}</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password" required>
+        </div>
+        <div class="field">
+            <label class="field-label" for="first_name">{{ t('auth.first_name') }}</label>
+            <input id="first_name" type="text" name="first_name" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+            <label class="field-label" for="last_name">{{ t('auth.last_name') }}</label>
+            <input id="last_name" type="text" name="last_name" autocomplete="family-name" required>
+        </div>
+        <div class="field">
+            <label class="field-label" for="field_level">{{ t('auth.field_level') }}</label>
+            <input id="field_level" type="text" name="field_level">
+        </div>
 
         <label><input type="submit" class="button" value="{{ t('auth.submit_register') }}"></label>
     </form>

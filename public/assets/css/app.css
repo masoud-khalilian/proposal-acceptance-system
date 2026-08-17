@@ -8,7 +8,9 @@
     --color-surface: #ffffff;
     --color-border: #dcdfe6;
     --color-text: #2b2f38;
+    --color-muted: #6b7280;
     --color-primary: #2f6feb;
+    --color-primary-hover: #2557c4;
     --color-primary-contrast: #ffffff;
     --color-error: #c0392b;
     --color-success: #1e8e3e;
@@ -21,31 +23,50 @@ body {
     font-family: 'IRANSans', system-ui, sans-serif;
     background: var(--color-bg);
     color: var(--color-text);
+    line-height: 1.5;
 }
 
 html[dir="rtl"] body { font-family: 'IRANSans', Tahoma, sans-serif; }
 
+a { color: var(--color-primary); }
+a:hover { color: var(--color-primary-hover); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
 .topbar {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.5rem;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
     background: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
 }
 
 .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--color-text); font-weight: bold; }
-.brand img { height: 32px; border-radius: 4px; }
+.brand-mark { display: inline-flex; color: var(--color-primary); }
 
-nav { display: flex; align-items: center; gap: 1rem; }
-nav a, .link-button { color: var(--color-primary); text-decoration: none; background: none; border: none; cursor: pointer; font: inherit; }
+nav { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+nav a, .link-button { color: var(--color-primary); text-decoration: none; background: none; border: none; cursor: pointer; font: inherit; padding: 0.25rem 0; }
+nav a:hover, .link-button:hover { color: var(--color-primary-hover); text-decoration: underline; }
 .inline-form { display: inline; }
+
+.lang-switch { display: flex; align-items: center; gap: 0.35rem; padding-inline-start: 0.5rem; border-inline-start: 1px solid var(--color-border); color: var(--color-muted); }
+.lang-switch a.active { font-weight: bold; color: var(--color-text); text-decoration: none; }
 
 .content { max-width: 960px; margin: 1.5rem auto; padding: 0 1rem; }
 
-.flash { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
-.flash-error { background: #fdecea; color: var(--color-error); }
-.flash-success { background: #e6f4ea; color: var(--color-success); }
+.flash {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-inline-start: 4px solid transparent;
+}
+.flash-error { background: #fdecea; color: var(--color-error); border-inline-start-color: var(--color-error); }
+.flash-success { background: #e6f4ea; color: var(--color-success); border-inline-start-color: var(--color-success); }
 
 .basic-grey {
     background: var(--color-surface);
@@ -54,16 +75,21 @@ nav a, .link-button { color: var(--color-primary); text-decoration: none; backgr
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
     max-width: 480px;
 }
 
-.basic-grey h1 { margin: 0 0 0.5rem; font-size: 1.25rem; }
-.basic-grey h1 span { display: block; font-size: 0.85rem; font-weight: normal; color: #666; }
+.basic-grey h1 { margin: 0 0 0.25rem; font-size: 1.25rem; }
+.basic-grey h1 span { display: block; font-size: 0.85rem; font-weight: normal; color: var(--color-muted); }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+.field-label { font-size: 0.85rem; font-weight: 600; color: var(--color-text); }
+.field-hint { font-size: 0.8rem; color: var(--color-muted); }
 
 .basic-grey input[type="text"],
 .basic-grey input[type="password"],
 .basic-grey input[type="number"],
+.basic-grey input[type="file"],
 .basic-grey select,
 .basic-grey textarea {
     width: 100%;
@@ -71,14 +97,17 @@ nav a, .link-button { color: var(--color-primary); text-decoration: none; backgr
     border: 1px solid var(--color-border);
     border-radius: 6px;
     font: inherit;
+    background: var(--color-surface);
+    color: var(--color-text);
 }
 
 .basic-grey textarea { min-height: 140px; resize: vertical; }
 
 .radio_label { display: flex; gap: 1rem; flex-wrap: wrap; }
-.checkbox-row { display: flex; align-items: center; gap: 0.4rem; }
+.checkbox-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; }
 
 .button, button.button {
+    display: inline-block;
     background: var(--color-primary);
     color: var(--color-primary-contrast);
     border: none;
@@ -86,13 +115,30 @@ nav a, .link-button { color: var(--color-primary); text-decoration: none; backgr
     padding: 0.6rem 1.2rem;
     cursor: pointer;
     font: inherit;
+    text-align: center;
 }
+.button:hover, button.button:hover { background: var(--color-primary-hover); }
 
-.data-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; background: var(--color-surface); }
-.data-table th, .data-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-border); text-align: start; }
+.button-secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+}
+.button-secondary:hover { background: var(--color-bg); color: var(--color-primary-hover); }
+
+.table-scroll { overflow-x: auto; margin-bottom: 1.5rem; }
+.data-table { width: 100%; border-collapse: collapse; background: var(--color-surface); }
+.data-table th, .data-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-border); text-align: start; white-space: nowrap; }
 .data-table th { background: #fafbfc; }
 
-.view-proposal-detail { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.submission-detail { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
 .content-block { white-space: pre-wrap; }
 
-.app-footer { text-align: center; padding: 1rem; color: #999; font-size: 0.8rem; }
+.attachment-link { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.app-footer { text-align: center; padding: 1rem; color: var(--color-muted); font-size: 0.8rem; }
+
+@media (max-width: 600px) {
+    .content { margin: 1rem auto; }
+    .basic-grey { padding: 1rem; max-width: 100%; }
+}
