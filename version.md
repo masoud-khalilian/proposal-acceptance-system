@@ -21,3 +21,11 @@ the same version number will also be surfaced in-app.
   `submissions`, `submission_reviewers`), seeded with the default
   submitter/reviewer/admin + thesis-proposal configuration. `.env`/`vendor/`/
   `var/` added to `.gitignore`.
+- `0.4.0` — Implemented the core workflow backend: hashed-password auth with
+  CSRF protection and role/ownership middleware (fixes the SQL injection,
+  plaintext-password, missing-CSRF, and unauthenticated-GET issues from the
+  legacy app), submitter create-submission + reviewer-selection flow, reviewer
+  approve/request-changes flow (replacing the old accept/corrigendum pages), a
+  real admin overview (replacing the `echo 'hi im admin'` stub), and
+  `bin/create-actor.php` for creating reviewer/admin accounts (matching the
+  legacy app's design where only submitters self-register).
