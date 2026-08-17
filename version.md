@@ -44,3 +44,8 @@ the same version number will also be surfaced in-app.
   rebuild is actually needed, and the day-to-day Compose commands. Added
   `.gitattributes` forcing LF line endings for `*.sh` so a future checkout
   under this repo's `core.autocrlf` setting can't corrupt the shebang line.
+- `0.6.1` — Added `migrations/003_seed_demo_accounts.sql`, seeding a
+  `student`/`professor`/`admin` account (all password `123456`) for easy
+  local login/testing across all three roles, and documented them in a new
+  "Demo accounts" README section. Verified all three actually log in against
+  the live dev stack.

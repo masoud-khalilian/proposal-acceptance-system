@@ -66,10 +66,25 @@ psql -f migrations/002_seed_reference_data.sql
 php -S localhost:8080 -t public
 ```
 
-## Creating reviewer/admin accounts
+## Demo accounts
+
+`migrations/003_seed_demo_accounts.sql` seeds a submitter, reviewer, and admin
+account for easy local login/testing (applied automatically on first boot,
+same as the other migrations):
+
+| Role      | Username    | Password |
+|-----------|-------------|----------|
+| Submitter | `student`   | `123456` |
+| Reviewer  | `professor` | `123456` |
+| Admin     | `admin`     | `123456` |
+
+These are for local/dev use only — never seed accounts like this against a
+real deployment.
+
+## Creating additional reviewer/admin accounts
 
 Matching the original app's design, only submitters can self-register through
-the web UI. Reviewer and admin accounts are created via CLI:
+the web UI. Additional reviewer/admin accounts are created via CLI:
 
 ```bash
 docker compose exec app php bin/create-actor.php reviewer prof.smith secret Jane Smith 3
